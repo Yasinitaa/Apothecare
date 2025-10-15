@@ -3,45 +3,31 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Apothecare — Home</title>
-  <link rel="stylesheet" href="../css/style.css" />
+  <title>Inloggen — Apothecare</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <header>
-    <div class="logo"><div class="icon">A</div>Apothecare</div>
-    <nav>
-      <a href="index.html" class="active">Home</a>
-      <a href="products.html">Producten</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="about.html">Over ons</a>
-      <a href="contact.html">Contact</a>
-    </nav>
-    <div class="search">
-      <input placeholder="Zoeken naar product..." />
-      <div class="cart" title="Winkelwagen">🛒</div>
-    </div>
-  </header>
+  <main class="page" style="max-width:400px;margin:80px auto;text-align:center">
+    <h2>Inloggen</h2>
+    <p>Welkom terug! Log in om toegang te krijgen tot je account of dashboard.</p>
 
-  <main>
-    <section class="page">
-      <div class="hero">
-        <div class="promo">
-          <h1>Welkom bij je apotheker</h1>
-          <p>Gemak en betrouwbare zorg binnen handbereik. Bekijk onze aanbevolen producten en bestel veilig online.</p>
-          <a href="products.html" class="btn">Bekijk producten</a>
-        </div>
-        <div>
-          <h2>Top producten</h2>
-          <div class="product-grid">
-            <div class="card"><h4>Paracetamol 500mg</h4><div class="price">€3.59</div></div>
-            <div class="card"><h4>Vitamine C 250mg</h4><div class="price">€4.29</div></div>
-            <div class="card"><h4>Handgel 100ml</h4><div class="price">€5.99</div></div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <form id="loginForm" style="display:grid;gap:14px;margin-top:24px">
+      <input class="field" type="email" name="email" placeholder="E-mail" required />
+      <input class="field" type="password" name="password" placeholder="Wachtwoord" required />
+      <button class="btn" type="submit">Inloggen</button>
+    </form>
+
+    <p style="margin-top:16px;font-size:14px">
+      Nog geen account? <a href="#">Registreer</a>
+    </p>
   </main>
 
-  <div class="chatbot" title="Chat">💬</div>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", e => {
+      e.preventDefault();
+      alert("Inloggen succesvol (mock)");
+  window.location.href = "index.html"; // terug naar hoofdpagina
+    });
+  </script>
 </body>
 </html>

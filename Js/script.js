@@ -1,79 +1,91 @@
-const products = [
+// ===============================
+// 🧩 DATA
+// ===============================
+const topProducts = [
   { id: 1, name: "Paracetamol 500mg", price: 3.59 },
   { id: 2, name: "Vitamine C 250mg", price: 4.29 },
   { id: 3, name: "Handgel 100ml", price: 5.99 },
-  { id: 4, name: "Zink supplement", price: 6.49 },
-  { id: 5, name: "Allergie tablet", price: 7.29 }
+  { id: 4, name: "Zetpil 240mg", price: 2.99 },
+  { id: 5, name: "Allergie tablet", price: 7.29 },
 ];
 
 const orders = [
   { date: "2025-10-01", client: "S. Jansen", total: "€ 12,90", status: "Verzonden" },
   { date: "2025-10-02", client: "M. de Vries", total: "€ 8,30", status: "In behandeling" },
-  { date: "2025-10-03", client: "A. Bakker", total: "€ 23,10", status: "Geleverd" }
+  { date: "2025-10-03", client: "A. Bakker", total: "€ 23,10", status: "Geleverd" },
 ];
 
+// ===============================
+// ⚙️ HELPER FUNCTIONS
+// ===============================
+
+// Shortcut selectors
 function $(sel) { return document.querySelector(sel); }
 function $all(sel) { return document.querySelectorAll(sel); }
 
+// Simulated add to cart (for later use)
+function addToCart(id) {
+  const product = topProducts.find(p => p.id === id);
+  alert(`✅ ${product.name} toegevoegd aan winkelmand!`);
+}
+
+// ===============================
+// 🛍️ PRODUCTS
+// ===============================
 function renderProducts() {
-  const grid = $("#products-grid");
-  const home = $("#home-products");
-  grid.innerHTML = "";
-  home.innerHTML = "";
-  products.forEach(p => {
-    const card = `
-      <div class="card">
-        <img alt="Product ${p.name}" />
-        <h4>${p.name}</h4>
-        <div class="price">€ ${p.price.toFixed(2)}</div>
-        <button class="btn" onclick="addToCart(${p.id})">In winkelmand</button>
-      </div>
+  const productGrid = document.querySelector(".product-grid");
+  if (!productGrid) return; // Stop if we're not on the home page
+
+  productGrid.innerHTML = "";
+  topProducts.forEach((product) => {
+    const card = document.createElement("div");
+    card.classList.add("card");
+    card.innerHTML = `
+      <h4>${product.name}</h4>
+      <div class="price">€${product.price.toFixed(2)}</div>
     `;
-    grid.innerHTML += card;
+    productGrid.appendChild(card);
   });
-  home.innerHTML = grid.innerHTML;
 }
 
+// ===============================
+// 📦 ORDERS (Dashboard)
+// ===============================
 function renderOrders() {
-  const tbody = $("#orders-table");
-  tbody.innerHTML = "";
-  orders.forEach(o => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${o.date}</td>
-        <td>${o.client}</td>
-        <td>${o.total}</td>
-        <td>${o.status}</td>
-      </tr>
+  const tableBody = document.querySelector("tbody");
+  if (!tableBody) return; // Stop if we're not on the dashboard page
+
+  tableBody.innerHTML = "";
+  orders.forEach(order => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+      <td>${order.date}</td>
+      <td>${order.client}</td>
+      <td>${order.total}</td>
+      <td>${order.status}</td>
     `;
+    tableBody.appendChild(row);
   });
 }
 
-// Enkelvoudige addToCart functie
-let cartCount = 0;
-const cartCountElement = document.getElementById('cart-count');
+// ===============================
+// 🔍 FUTURE EXTRAS (search etc.)
+// ===============================
+function setupSearch() {
+  const searchInput = document.querySelector(".search input");
+  if (!searchInput) return;
 
-function addToCart(quantity = 1) {
-  cartCount += quantity;
-  cartCountElement.textContent = cartCount;
-  alert("Product toegevoegd aan winkelmand (mock): " + quantity);
-}
-
-// Navigatie
-function navigateTo(view) {
-  $all("nav a").forEach(a => a.classList.toggle("active", a.dataset.view === view));
-  ["home", "products", "dashboard", "about", "contact"].forEach(v => {
-    const el = $("#view-" + v);
-    el.style.display = (v === view) ? "" : "none";
+  searchInput.addEventListener("input", (e) => {
+    console.log("Zoeken naar:", e.target.value);
+    // Later kun je hier filters of suggesties toevoegen
   });
 }
 
-$all("nav a").forEach(a => {
-  a.addEventListener("click", e => {
-    // let the browser redirect normally
-  });
+// ===============================
+// 🚀 INIT (runs on every page)
+// ===============================
+document.addEventListener("DOMContentLoaded", () => {
+  renderProducts();
+  renderOrders();
+  setupSearch();
 });
-
-renderProducts();
-renderOrders();
-navigateTo("home");
