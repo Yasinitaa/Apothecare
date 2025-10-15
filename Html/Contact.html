@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="nl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Apothecare — Contact</title>
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="logo"><div class="icon">A</div>Apothecare</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="products.html">Producten</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="about.html">Over ons</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+    <div class="search">
+      <input id="q" placeholder="Zoeken naar product..." />
+      <div class="cart" title="Winkelwagen">🛒</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="page">
+      <h2>Contact</h2>
+      <p>Vul onderstaand formulier in en we nemen zo snel mogelijk contact op.</p>
+      <form onsubmit="alert('Bericht verzonden!'); return false;">
+        <input class="field" type="text" name="name" placeholder="Naam" required />
+        <input class="field" type="email" name="email" placeholder="E-mail" required />
+        <textarea class="field" name="message" rows="6" placeholder="Bericht"></textarea>
+        <button class="btn" type="submit">Versturen</button>
+      </form>
+    </section>
+  </main>
+
+  <div class="chatbot" title="Chat">💬</div>
+</body>
+</html>
