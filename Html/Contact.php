@@ -9,7 +9,7 @@
 </head>
 <body>
   <header>
-    <a href="home.html" class="logo">
+    <a href="home.php" class="logo">
       <div class="icon">
         <img src="../Img/logo.png" alt="">
       </div>
@@ -18,8 +18,8 @@
     <nav>
       <a href="home.php">Home</a>
       <a href="products.php">Producten</a>
-      <a href="about.html">Over ons</a>
-      <a href="contact.html" class="active">Contact</a>
+      <a href="about.php">Over ons</a>
+      <a href="contact.php" class="active">Contact</a>
     </nav>
     <div class="search">
       <input id="q" placeholder="Zoeken naar product..." />
@@ -40,7 +40,22 @@
     </section>
   </main>
 
-  <div class="chatbot" title="Chat">💬</div>
-  <script src="../js/script.js"></script>
+  
+  <!-- 💬 Chatbot Icon -->
+  <div class="chatbot" title="Chat" onclick="toggleChat()">💬</div>
+
+  <!-- 💬 Chat Popup -->
+  <div id="chatBox">
+    <div id="chatHeader">
+      Chatbot
+      <span style="cursor:pointer;" onclick="toggleChat()">✖</span>
+    </div>
+    <div id="chatContent"></div>
+    <form id="chatForm">
+      <input type="text" id="userInput" placeholder="Typ je bericht..." required>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+<script src="../js/script.js"></script>
 </body>
 </html>

@@ -131,61 +131,73 @@ document.addEventListener("DOMContentLoaded", () => {
   updateCartCount();
 });
 
+// ===============================
+// 💬 CHAT (works on all pages)
+// ===============================
+function getChatEndpoint() {
+  // Always post to home.php (which already handles chat correctly)
+  return "home.php";
+}
 
+const chatBox = document.getElementById("chatBox");
+const chatContent = document.getElementById("chatContent");
+const chatForm = document.getElementById("chatForm");
+const userInput = document.getElementById("userInput");
 
-
-  const chatBox = document.getElementById('chatBox');
-  const chatContent = document.getElementById('chatContent');
-  const chatForm = document.getElementById('chatForm');
-  const userInput = document.getElementById('userInput');
-
+if (chatBox && chatContent && chatForm && userInput) {
   function toggleChat() {
     // --- CLOSE (fade-out) ---
-    if (chatBox.classList.contains('open')) {
-      chatBox.classList.add('closing');
-      chatBox.classList.remove('open');
+    if (chatBox.classList.contains("open")) {
+      chatBox.classList.add("closing");
+      chatBox.classList.remove("open");
 
-      // hide only after CSS transition really ends
       const hideAfter = () => {
-        chatBox.style.display = 'none';
-        chatBox.removeEventListener('transitionend', hideAfter);
-        chatBox.classList.remove('closing');
+        chatBox.style.display = "none";
+        chatBox.removeEventListener("transitionend", hideAfter);
+        chatBox.classList.remove("closing");
       };
-      chatBox.addEventListener('transitionend', hideAfter);
+      chatBox.addEventListener("transitionend", hideAfter);
       return;
     }
 
     // --- OPEN (fade-in) ---
-    chatBox.style.display = 'block';
-    // allow layout to update, then animate
-    requestAnimationFrame(() => chatBox.classList.add('open'));
+    chatBox.style.display = "block";
+    requestAnimationFrame(() => chatBox.classList.add("open"));
   }
 
   window.toggleChat = toggleChat;
 
-  chatForm.addEventListener('submit', async (e) => {
+  chatForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     const message = userInput.value.trim();
     if (!message) return;
-    
+
     // show user message
     chatContent.innerHTML += `<div class="message userMsg"><strong>Jij:</strong> ${message}</div>`;
     chatContent.scrollTop = chatContent.scrollHeight;
-    userInput.value = '';
+    userInput.value = "";
 
     const formData = new FormData();
-    formData.append('vraag', message);
+    formData.append("vraag", message);
 
     try {
-      const res = await fetch(window.location.href, {
-        method: 'POST',
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-        body: formData
+      // Always send chat requests to home.php
+      const res = await fetch(getChatEndpoint(), {
+        method: "POST",
+        headers: { "X-Requested-With": "XMLHttpRequest" },
+        body: formData,
       });
+
       const text = await res.text();
-      chatContent.innerHTML += `<div class="message aiMsg">${text}</div>`;
+
+      // Avoid printing full HTML pages inside chat
+      const looksLikeHtml = /^\s*<!doctype html|^\s*<html/i.test(text);
+      chatContent.innerHTML += `<div class="message aiMsg">${
+        looksLikeHtml ? "⚠️ De server gaf HTML terug i.p.v. chattekst." : text
+      }</div>`;
       chatContent.scrollTop = chatContent.scrollHeight;
     } catch (err) {
       chatContent.innerHTML += `<div class="message aiMsg">⚠️ Er is een fout opgetreden.</div>`;
     }
   });
+}

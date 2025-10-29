@@ -40,8 +40,8 @@ if (
     <nav>
       <a href="home.php" class="active">Home</a>
       <a href="products.php">Producten</a>
-      <a href="about.html">Over ons</a>
-      <a href="contact.html">Contact</a>
+      <a href="about.php">Over ons</a>
+      <a href="contact.php">Contact</a>
     </nav>
 
     <div class="search">
